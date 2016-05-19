@@ -19,4 +19,7 @@ shift_arr.map! do |e|
 	e	
 	end  
 end
-puts shift_arr
+
+new_arr = shift_arr.map { |e| alpha[e]  }
+
+puts new_arr.join("")
