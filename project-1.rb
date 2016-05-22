@@ -1,10 +1,12 @@
-alpha = [*('a'..'z')]
-
 puts "Please enter a string:"
-usr_str = gets.downcase.chomp
+usr_str = gets.chomp
 
 puts "Please enter the shift number:"
 usr_shift = gets.to_i
+
+if usr_shift > 26
+	usr_shift = usr_shift % 26
+end
 
 usr_words = usr_str.split(" ")
 sent_lnth = usr_words.length
@@ -13,21 +15,26 @@ new_sent = []
 
 while i < sent_lnth
 	usr_arr = usr_words[i].split("")
-	shift_arr = usr_arr.map do |e| 
-		alpha.index(e) + usr_shift
-	end
-
-	shift_arr.map! do |e| 
-		if e > 26
-		e = e - 26
+	shift_arr = usr_arr.map do |e|
+		int = e.ord 
+		if int.between?(65, 90)
+			new_int = int + usr_shift
+			if new_int > 90
+				new_int = new_int - 26
+			end
+			new_int = new_int.chr
+		elsif int.between?(97, 122)
+			new_int = int + usr_shift
+			if new_int > 122
+				new_int = new_int - 26
+			end
+			new_int = new_int.chr
 		else
-		e	
-		end  
+			new_int = int.chr
+		end		
 	end
 
-	new_arr = shift_arr.map { |e| alpha[e]  }
-
-	new_sent.push(new_arr.join(''))
+	new_sent.push(shift_arr.join(''))
 	i+=1
 end
 
